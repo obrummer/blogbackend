@@ -2,8 +2,6 @@ POST http://localhost:3001/api/blogs/
 Content-Type: application/json
 
 {
-  "title": "juupa",
-  "author": "joki",
-  "url": "www.joku",
+  "author": "yes",
   "likes": "5"
 }

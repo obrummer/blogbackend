@@ -220,8 +220,28 @@ describe('favourite blog', () => {
     __v: 0
   };
 
+  const mostBlogsObject = {
+    author: 'Robert C. Martin',
+    blogs: 3
+  };
+
+  const mostLikesAuthor = {
+    author: 'Edsger W. Dijkstra',
+    likes: 17
+  };
+
   test('return the object with highest amount of likes', () => {
     const result = listHelper.favoriteBlog(manyBlogs);
     expect(result).toEqual(highestObject);
+  });
+
+  test('return the author with highest number of blogs', () => {
+    const result = listHelper.mostBlogs(manyBlogs);
+    expect(result).toEqual(mostBlogsObject);
+  });
+
+  test('return the author with highest number of likes', () => {
+    const result = listHelper.mostLikes(manyBlogs);
+    expect(result).toEqual(mostLikesAuthor);
   });
 });
