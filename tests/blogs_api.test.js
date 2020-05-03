@@ -3,6 +3,41 @@ const supertest = require('supertest');
 const helper = require('./test_helper');
 const app = require('../app');
 const Blog = require('../models/blog');
+// const User = require('../models/user');
+
+let token;
+const api = supertest(app);
+
+// beforeAll(async () => {
+//   await User.deleteMany({});
+
+//   const newUser = {
+//     username: 'jone',
+//     name: 'jone',
+//     password: 'secret',
+//   };
+
+//   await api
+//     .post('/api/users')
+//     .send(newUser)
+//     .expect(200)
+//     .expect('Content-Type', /application\/json/);
+// });
+
+// beforeAll(async () => {
+
+//   await api
+//     .post('/login')
+//     .send({
+//       username: 'jone',
+//       password: 'secret',
+//     })
+//     .expect((response) => {
+//       // save the token!
+//       console.log(response.body);
+//     // done();
+//     });
+// });
 
 beforeEach(async () => {
   await Blog.deleteMany({});
@@ -14,7 +49,6 @@ beforeEach(async () => {
   await blogObject.save();
 });
 
-const api = supertest(app);
 
 test('blogs are returned as json', async () => {
   await api
@@ -30,6 +64,7 @@ test('there are two blogs', async () => {
 });
 
 test('id is defined', async () => {
+  console.log(token);
   const response = await api.get('/api/blogs');
   expect(response.body[0].id).toBeDefined();
 });
@@ -44,6 +79,7 @@ test('a valid blog can be added ', async () => {
 
   await api
     .post('/api/blogs')
+    .set('Authorization', `Bearer ${token}`)
     .send(newBlog)
     .expect(200)
     .expect('Content-Type', /application\/json/);

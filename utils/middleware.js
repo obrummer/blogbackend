@@ -1,5 +1,17 @@
 const logger = require('./logger');
 
+const tokenExtractor = (request, res, next) => {
+  const authorization = request.get('authorization');
+  console.log('toimii');
+  if (authorization && authorization.toLowerCase().startsWith('bearer ')) {
+    request.token = request.get('authorization').substring(7);
+    // console.log(request);
+    return request;
+  }
+
+  next();
+};
+
 const requestLogger = (request, response, next) => {
   logger.info('Method:', request.method);
   logger.info('Path:  ', request.path);
@@ -19,13 +31,23 @@ const errorHandler = (error, request, response, next) => {
     return response.status(400).send({ error: 'malformatted id' });
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message });
+  } else if (error.name === 'JsonWebTokenError') {
+    return response.status(401).json({
+      error: 'invalid token'
+    });
   }
+
+  logger.error(error.message);
 
   next(error);
 };
 
+
 module.exports = {
+  tokenExtractor,
   requestLogger,
   unknownEndpoint,
-  errorHandler
+  errorHandler,
+  // tokenExtractor
+  // uniqueUsername
 };

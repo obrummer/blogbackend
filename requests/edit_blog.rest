@@ -1,8 +1,9 @@
-PUT http://localhost:3001/api/blogs/5e9a9b43b6ebe17ec7648817
+PUT http://localhost:3001/api/blogs/5ea964194a9869342031d39c
 Content-Type: application/json
 
 {
-  "title": "no",
+  "user": "5ea3ce4dad72600dd8b31eb9",
+  "title": "putti",
   "author": "yes",
   "url": "no",
   "likes": "5"

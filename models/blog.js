@@ -8,7 +8,11 @@ const blogSchema = new mongoose.Schema({
   title: { type: String },
   author: { type: String },
   url: { type: String },
-  likes: { type: Number }
+  likes: { type: Number },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 });
 
 blogSchema.plugin(uniqueValidator);
